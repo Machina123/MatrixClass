@@ -69,6 +69,8 @@ namespace MatrixClass
             m = rows;
             n = cols;
 
+            element = new int[m, n];
+
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -87,7 +89,8 @@ namespace MatrixClass
             {
                 for (int j = 0; j < n; j++)
                 {
-                    Console.Write("Podaj element [{0},{1}] macierzy {2}", i, j, symbol);
+                   
+                    Console.Write("Podaj element [{0},{1}] macierzy {2}: ", i, j, symbol);
                     element[i, j] = int.Parse(Console.ReadLine());
                 }
 
@@ -115,8 +118,23 @@ namespace MatrixClass
         /// </summary>
         /// <param name="a">Pierwsza macierz</param>
         /// <param name="b">Druga macierz</param>
-        public void AddMatrix(Matrix a, Matrix b)
+        /// <returns>True gdy sukces, False gdy błąd</returns>
+        public bool AddMatrix(Matrix a, Matrix b)
         {
+            if(a.m != b.m || a.n != b.n )
+            {
+              Console.WriteLine("Macierze nie mają takich samych wymiarów!");
+              return false;
+            }
+            else
+            {
+                m = a.m;
+                n = a.n;
+                symbol = "C";
+            }
+
+            element = new int[m,n];
+
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -124,6 +142,7 @@ namespace MatrixClass
                     element[i, j] = a.element[i, j] + b.element[i, j];
                 }
             }
+            return true;
         }
 
         /// <summary>
@@ -131,8 +150,14 @@ namespace MatrixClass
         /// </summary>
         /// <param name="a">Macierz do wymnożenia</param>
         /// <param name="k">Skalar</param>
-        public void MultipyMatrixByNumber(Matrix a, int k)
+        /// <returns>Zawsze True</returns>
+        public bool MultipyMatrixByNumber(Matrix a, int k)
         {
+            m = a.m;
+            n = a.n;
+            symbol = "C";
+            element = new int[m, n];
+
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -140,6 +165,7 @@ namespace MatrixClass
                     element[i, j] = a.element[i, j] * k;
                 }
             }
+            return true;
         }
 
         /// <summary>
@@ -147,24 +173,32 @@ namespace MatrixClass
         /// </summary>
         /// <param name="a">Pierwsza macierz</param>
         /// <param name="b">Druga macierz</param>
-        public void MultiplyMatrixByMatrix(Matrix a, Matrix b)
+        /// <returns>True gdy sukces, False gdy błąd</returns>
+        public bool MultiplyMatrixByMatrix(Matrix a, Matrix b)
         {
             if (a.n != b.m)
             {
-                throw new ArithmeticException("Niezgodne wymiary!");
+                Console.WriteLine("Niezgodne wymiary!");
+                return false;
             }
-            element = new int[a.m, b.n];
-            for (int i = 0; i < a.m; i++)
+            m = a.m;
+            n = b.n;
+            int k = a.n;
+            symbol = "C";
+            element = new int[m,n];
+
+            for (int i = 0; i < m; i++)
             {
-                for (int j = 0; j < b.n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     element[i, j] = 0;
-                    for (int r = 0; r < a.n; r++)
+                    for (int r = 0; r < k; r++)
                     {
                         element[i, j] = a.element[i, r] * b.element[r, j];
                     }
                 }
             }
+            return true;
         }
     }  
 }

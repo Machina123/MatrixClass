@@ -10,12 +10,50 @@ namespace MatrixClass
     {
         static void Main(string[] args)
         {
-            Matrix a = new Matrix("A", 2, 4);
-            Matrix b = new Matrix("B", 2, 4);
+            Matrix a = new Matrix("A");
+            Matrix b = new Matrix("B");
 
             a.EnterData();
             b.EnterData();
 
+            Console.Write("Podaj skalar: ");
+            int k = int.Parse(Console.ReadLine());
+
+            a.WriteData();
+            b.WriteData();
+
+            Matrix c = new Matrix();
+
+            Console.WriteLine(Environment.NewLine + "Macierz C = A + B");
+            if (c.AddMatrix(a, b))
+            {
+                c.WriteData();
+            }
+            else
+            {
+                Console.WriteLine("Wystąpił błąd!");
+            }
+
+            Console.WriteLine(Environment.NewLine + "Macierz C = A * k");
+            if (c.MultipyMatrixByNumber(a,k))
+            {
+                c.WriteData();
+            }
+            else
+            {
+                Console.WriteLine("Wystąpił błąd!");
+            }
+
+            Console.WriteLine(Environment.NewLine + "Macierz C = A * B");
+            if (c.MultiplyMatrixByMatrix(a, b))
+            {
+                c.WriteData();
+            }
+            else
+            {
+                Console.WriteLine("Wystąpił błąd!");
+            }
+            Console.ReadKey();
         }
     }
 }
