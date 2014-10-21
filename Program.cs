@@ -25,33 +25,36 @@ namespace MatrixClass
             Matrix c = new Matrix();
 
             Console.WriteLine(Environment.NewLine + "Macierz C = A + B");
-            if (c.AddMatrix(a, b))
+            try
             {
+                c.AddMatrix(a, b);
                 c.WriteData();
             }
-            else
+            catch(Exception e)
             {
-                Console.WriteLine("Wystąpił błąd!");
+                Console.WriteLine("Wystąpił błąd: {0}", e.Message.ToString());
             }
-
+            
             Console.WriteLine(Environment.NewLine + "Macierz C = A * k");
-            if (c.MultipyMatrixByNumber(a,k))
+            try
             {
+                c.MultipyMatrixByNumber(a, k);
                 c.WriteData();
             }
-            else
+            catch(Exception e)
             {
-                Console.WriteLine("Wystąpił błąd!");
+                Console.WriteLine("Wystąpił błąd: {0}", e.Message.ToString());
             }
 
             Console.WriteLine(Environment.NewLine + "Macierz C = A * B");
-            if (c.MultiplyMatrixByMatrix(a, b))
+            try
             {
+                c.MultiplyMatrixByMatrix(a, b);
                 c.WriteData();
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Wystąpił błąd!");
+                Console.WriteLine("Wystąpił błąd: {0}", e.Message.ToString());
             }
             Console.ReadKey();
         }

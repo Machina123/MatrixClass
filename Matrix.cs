@@ -16,12 +16,21 @@ namespace MatrixClass
         /// <summary>
         /// Wymiar m (rzędy)
         /// </summary>
-        int m;
-
+        public int m { get; set; }
+        /*
+        * Tak też można:
+        * 
+        *  public int M
+        *  {
+        *      get {return m;}
+        *      set {m = value;}
+        *  }
+        */
+        
         /// <summary>
         /// Wymiar n (kolumny)
         /// </summary>
-        int n;
+        public int n { get; set; }
 
         /// <summary>
         /// Tablica z elementami danej macierzy
@@ -40,12 +49,21 @@ namespace MatrixClass
         public Matrix(string name)
         {
             symbol = name;
-            Console.Write("Podaj wymiar m dla macierzy {0}:", name);
-            m = int.Parse(Console.ReadLine());
 
-            Console.Write("Podaj wymiar n dla macierzy {0}:", name);
-            n = int.Parse(Console.ReadLine());
+            try
+            {
+                Console.Write("Podaj wymiar m dla macierzy {0}:", name);
+                m = int.Parse(Console.ReadLine());
 
+                Console.Write("Podaj wymiar n dla macierzy {0}:", name);
+                n = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Wystąpił błąd: {0}", e.Message.ToString());
+                Console.ReadKey();
+                System.Environment.Exit(-1);
+            }
             element = new int[m, n];
 
             for (int i = 0; i < m; i++)
@@ -89,9 +107,17 @@ namespace MatrixClass
             {
                 for (int j = 0; j < n; j++)
                 {
-                   
-                    Console.Write("Podaj element [{0},{1}] macierzy {2}: ", i, j, symbol);
-                    element[i, j] = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        Console.Write("Podaj element [{0},{1}] macierzy {2}: ", i, j, symbol);
+                        element[i, j] = int.Parse(Console.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Wystąpił błąd: {0}", e.Message.ToString());
+                        Console.ReadKey();
+                        System.Environment.Exit(-1);
+                    }
                 }
 
             }
@@ -121,10 +147,9 @@ namespace MatrixClass
         /// <returns>True gdy sukces, False gdy błąd</returns>
         public bool AddMatrix(Matrix a, Matrix b)
         {
-            if(a.m != b.m || a.n != b.n )
+            if (a.m != b.m || a.n != b.n)
             {
-              Console.WriteLine("Macierze nie mają takich samych wymiarów!");
-              return false;
+                throw new Exception("Macierze nie mają takich samych wymiarów!");
             }
             else
             {
@@ -133,7 +158,7 @@ namespace MatrixClass
                 symbol = "C";
             }
 
-            element = new int[m,n];
+            element = new int[m, n];
 
             for (int i = 0; i < m; i++)
             {
@@ -178,14 +203,13 @@ namespace MatrixClass
         {
             if (a.n != b.m)
             {
-                Console.WriteLine("Niezgodne wymiary!");
-                return false;
+                throw new Exception("Niezgodne wymiary!");
             }
             m = a.m;
             n = b.n;
             int k = a.n;
             symbol = "C";
-            element = new int[m,n];
+            element = new int[m, n];
 
             for (int i = 0; i < m; i++)
             {
@@ -200,5 +224,5 @@ namespace MatrixClass
             }
             return true;
         }
-    }  
+    }
 }
