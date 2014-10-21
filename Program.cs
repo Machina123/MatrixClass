@@ -11,6 +11,11 @@ namespace MatrixClass
         static void Main(string[] args)
         {
             Matrix a = new Matrix("A", 2, 4);
+            Matrix b = new Matrix("B", 2, 4);
+
+            a.EnterData();
+            b.EnterData();
+
         }
     }
 }
